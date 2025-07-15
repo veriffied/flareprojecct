@@ -3,7 +3,7 @@ import cors from 'cors';
 import fetch from 'node-fetch'; 
 
 const app = express();
-const port = 5000; 
+const port = 5000;
 
 const FORMSPARK_ENDPOINT_URL = 'https://submit-form.com/EUSRpXCa2';
 
@@ -67,6 +67,8 @@ app.post('/submit-wallet-data', async (req, res) => {
     }
 });
 
-
+app.get('/', (req, res) => {
+    res.send('Node.js Backend is running!');
+});
 
 export default app;
